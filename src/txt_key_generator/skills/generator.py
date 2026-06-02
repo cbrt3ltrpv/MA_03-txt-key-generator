@@ -44,6 +44,7 @@ class PromptBuildSkill:
         requirements = "\n".join(keys.additional_requirements) or "Нет дополнительных требований."
         must_include = ", ".join(keys.must_include) or "нет"
         must_avoid = ", ".join(keys.must_avoid) or "нет"
+        custom_parameters = self._format_custom_parameters(keys)
         return f"""
 Создай текст по параметрам.
 
@@ -56,7 +57,17 @@ class PromptBuildSkill:
 
 Обязательно включить: {must_include}
 Избегать: {must_avoid}
+Пользовательские ключи:
+{custom_parameters}
 Дополнительные требования:
 {requirements}
 """.strip()
 
+    def _format_custom_parameters(self, keys: GenerationKeys) -> str:
+        if not keys.custom_parameters:
+            return "Нет пользовательских ключей."
+        lines = []
+        for parameter in keys.custom_parameters:
+            description = f" ({parameter.description})" if parameter.description else ""
+            lines.append(f"- {parameter.name}: {parameter.value}{description}")
+        return "\n".join(lines)

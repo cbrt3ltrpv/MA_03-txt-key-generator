@@ -30,6 +30,17 @@ class RouteResult(BaseModel):
     extension: str | None = None
 
 
+class CustomParameter(BaseModel):
+    name: str
+    value: str
+    description: str | None = None
+
+    @field_validator("name", "value", "description")
+    @classmethod
+    def strip_text(cls, value: str | None) -> str | None:
+        return value.strip() if isinstance(value, str) else value
+
+
 class GenerationKeys(BaseModel):
     keywords: list[str] = Field(default_factory=list)
     topic: str | None = None
@@ -42,6 +53,7 @@ class GenerationKeys(BaseModel):
     must_include: list[str] = Field(default_factory=list)
     must_avoid: list[str] = Field(default_factory=list)
     additional_requirements: list[str] = Field(default_factory=list)
+    custom_parameters: list[CustomParameter] = Field(default_factory=list)
 
     @field_validator("keywords", "must_include", "must_avoid", "additional_requirements")
     @classmethod
@@ -87,4 +99,3 @@ class GenerationResult(BaseModel):
     cycles_used: int
     drafts: list[str] = Field(default_factory=list)
     needs_clarification: bool = False
-

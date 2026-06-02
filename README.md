@@ -7,7 +7,7 @@ Telegram bot for turning structured text-generation briefs into reviewed drafts.
 | Capability | Description |
 | --- | --- |
 | Brief intake | Routes Telegram text messages and supported document uploads into a common processing flow. |
-| Key extraction | Parses topic, language, word count, keywords, editorial policy, audience, tone, structure, and constraints into a typed schema. |
+| Key extraction | Parses topic, language, word count, keywords, editorial policy, audience, tone, structure, constraints, and arbitrary extra keys into a typed schema. |
 | Agent review loop | Generates a draft, checks it against the extracted keys, and revises failed drafts for a configurable number of cycles. |
 | Clarification handling | Returns missing requirements and clarifying questions when the source brief is incomplete. |
 | Long response support | Splits large bot replies into Telegram-friendly chunks. |
@@ -87,6 +87,8 @@ Send the bot a message or supported file with generation keys:
 Редполитика: без канцелярита, короткие абзацы
 Аудитория: руководители отделов продаж
 ```
+
+The fields above are not the only allowed keys. Known fields are mapped to first-class schema fields, and any other useful key is preserved as `custom_parameters`. For example, `CTA`, `SEO title`, `Платформа публикации`, `Формат`, `Запрещенные слова`, or `Роль автора` are passed through generation, checking, and revision as user-defined constraints.
 
 The bot extracts the brief, generates a draft, validates it, and either returns the final text or asks for missing information.
 

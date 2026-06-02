@@ -3,7 +3,7 @@ from io import BytesIO
 from docx import Document
 from pypdf import PdfWriter
 
-from txt_key_generator.schemas import GenerationKeys, InputKind
+from txt_key_generator.schemas import CustomParameter, GenerationKeys, InputKind
 from txt_key_generator.skills.system import (
     FileReaderSkill,
     InputRouterSkill,
@@ -50,6 +50,21 @@ def test_key_validation_detects_conflicts() -> None:
     assert result.conflicts
 
 
+def test_generation_keys_preserve_custom_parameters() -> None:
+    keys = GenerationKeys(
+        topic="CRM",
+        language="ru",
+        target_word_count=100,
+        custom_parameters=[
+            CustomParameter(name="CTA", value="Записаться на демо"),
+            CustomParameter(name="Платформа", value="Telegram post"),
+        ],
+    )
+
+    assert keys.custom_parameters[0].name == "CTA"
+    assert keys.custom_parameters[0].value == "Записаться на демо"
+
+
 def test_message_splitter_respects_limit() -> None:
     chunks = MessageSplitterSkill(max_length=10).split("one two three four five")
 
@@ -93,4 +108,3 @@ def test_file_reader_reads_pdf_with_extractable_text_smoke() -> None:
         FileReaderSkill().read_bytes(buffer.getvalue(), "blank.pdf")
     except ValueError as exc:
         assert "extractable text" in str(exc)
-

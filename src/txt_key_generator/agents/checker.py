@@ -60,8 +60,8 @@ class CheckerAgent:
 - Структура: {self.structure.instructions(keys)}
 - Запрещенные элементы: {", ".join(keys.must_avoid) or "нет"}
 - Обязательные элементы: {", ".join(keys.must_include) or "нет"}
+- Пользовательские ключи из GenerationKeys тоже обязательны к проверке.
 
 Текст для проверки:
 {text}
 """.strip()
-
