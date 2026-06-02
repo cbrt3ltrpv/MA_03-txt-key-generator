@@ -62,7 +62,8 @@ The workflow is deterministic around Telegram routing, file parsing, required-fi
 
 ## Example Interaction
 
-Send the bot a message or supported file with generation keys:
+Send the bot a message or supported file with generation keys. A reusable sample
+is available in [`examples/brief.md`](examples/brief.md).
 
 ```text
 Тема: запуск продукта
@@ -107,6 +108,7 @@ src/txt_key_generator/
   orchestrator.py
   schemas.py     Pydantic contracts for inputs, reports, and results
 tests/           Unit tests with fake model clients
+examples/        Ready-to-send generation brief for manual workflow checks
 .github/         Issue templates, pull request template, and CI workflow
 ```
 
@@ -164,6 +166,9 @@ Useful local checks before opening a pull request:
 python -m pytest
 ```
 
+For contribution workflow, local checks, and pull request expectations, see
+[`CONTRIBUTING.md`](CONTRIBUTING.md).
+
 ## Deployment Notes
 
 - Use `BOT_RUN_MODE=polling` when the process can keep a long-lived Telegram polling connection.
@@ -184,7 +189,7 @@ python -m pytest
 | Area | Next improvement |
 | --- | --- |
 | CI | Keep GitHub Actions running `pytest` on pull requests and pushes. |
-| Demo assets | Capture a short Telegram text request and file-upload transcript for the README or social preview. |
+| Demo assets | Capture a short Telegram text request and file-upload transcript to complement `examples/brief.md` in the README or social preview. |
 | Deployment | Add a Dockerfile or process manager example for VPS/webhook hosting. |
 | Evaluation | Add fixture-based regression checks for extraction, checker reports, and revision quality. |
 | Observability | Add structured logs around extraction, cycle count, checker score, and failed file parsing. |
@@ -192,4 +197,4 @@ python -m pytest
 
 ## GitHub Collaboration
 
-The repository includes issue templates for bug reports and feature requests, a pull request template with checks for bot behavior, agent workflow, file parsing, configuration/deployment impact, and test coverage, plus a GitHub Actions workflow that runs the Python test suite.
+The repository includes issue templates for bug reports and feature requests, a pull request template with checks for bot behavior, agent workflow, file parsing, configuration/deployment impact, and test coverage, a contribution guide, plus a GitHub Actions workflow that runs the Python test suite.
