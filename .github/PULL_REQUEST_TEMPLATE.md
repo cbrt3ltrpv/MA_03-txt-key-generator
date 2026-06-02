@@ -1,7 +1,5 @@
 ## Summary
 
-- 
-
 ## Change Type
 
 - [ ] Bot behavior

@@ -8,9 +8,7 @@ assignees: ""
 
 ## What happened?
 
-
 ## Expected behavior
-
 
 ## Input type
 

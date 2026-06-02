@@ -8,9 +8,7 @@ assignees: ""
 
 ## Problem
 
-
 ## Proposed behavior
-
 
 ## Workflow area
 
@@ -23,5 +21,3 @@ assignees: ""
 - [ ] Deployment/operations
 
 ## Acceptance criteria
-
-- 
