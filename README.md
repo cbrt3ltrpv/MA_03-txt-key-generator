@@ -2,9 +2,15 @@
 
 [![CI](https://github.com/cbrt3ltrpv/MA_03-txt-key-generator/actions/workflows/ci.yml/badge.svg)](https://github.com/cbrt3ltrpv/MA_03-txt-key-generator/actions/workflows/ci.yml)
 
-Telegram bot for turning structured text-generation briefs into reviewed drafts. It accepts plain messages or `TXT`, `MD`, `DOCX`, and `PDF` files, extracts generation keys, and runs a generator/checker/reviser workflow before sending the result back to the user.
+Telegram bot for turning structured text-generation briefs into reviewed drafts.
+It accepts plain messages or `TXT`, `MD`, `DOCX`, and `PDF` files, extracts
+generation keys, and runs a generator/checker/reviser workflow before sending
+the result back to the user.
 
-The project is built as a small agent workflow rather than a single prompt call: deterministic skills handle routing, file parsing, schema validation, word-count checks, keyword coverage, message splitting, and retry limits, while model-backed agents handle extraction, drafting, semantic checking, and revision.
+The project is built as a small agent workflow rather than a single prompt call:
+deterministic skills handle routing, file parsing, schema validation, word-count
+checks, keyword coverage, message splitting, and retry limits, while model-backed
+agents handle extraction, drafting, semantic checking, and revision.
 
 ## Capabilities
 
@@ -35,7 +41,12 @@ flowchart TD
     Checker -->|Fail after max cycles| Clarify
 ```
 
-The workflow is deterministic around Telegram routing, file parsing, required-field validation, conflict detection, word-count tolerance, keyword coverage, message splitting, and revision-cycle limits. Draft generation, key extraction, semantic checking, and text revision are model-driven through structured OpenAI Responses API calls and should still be reviewed by a human before publication.
+The workflow is deterministic around Telegram routing, file parsing,
+required-field validation, conflict detection, word-count tolerance, keyword
+coverage, message splitting, and revision-cycle limits. Draft generation, key
+extraction, semantic checking, and text revision are model-driven through
+structured OpenAI Responses API calls and should still be reviewed by a human
+before publication.
 
 ## Agents
 
@@ -77,13 +88,21 @@ CTA: записаться на демо
 
 Expected path:
 
-1. The bot extracts `topic`, `language`, `target_word_count`, `keywords`, `red_policy`, `audience`, and custom `CTA`.
-2. `KeyValidationSkill` confirms that the required fields are present and there are no include/avoid conflicts.
+1. The bot extracts `topic`, `language`, `target_word_count`, `keywords`,
+   `red_policy`, `audience`, and custom `CTA`.
+2. `KeyValidationSkill` confirms that the required fields are present and there
+   are no include/avoid conflicts.
 3. `GeneratorAgent` creates a draft.
-4. `CheckerAgent` merges deterministic word-count and keyword checks with model-backed checks for language, structure, red policy, and custom parameters.
-5. If the report passes, the bot returns the final text with a check report. If it fails, `ReviserAgent` rewrites the draft and the checker runs again until the configured cycle limit is reached.
+4. `CheckerAgent` merges deterministic word-count and keyword checks with
+   model-backed checks for language, structure, red policy, and custom
+   parameters.
+5. If the report passes, the bot returns the final text with a check report. If
+   it fails, `ReviserAgent` rewrites the draft and the checker runs again until
+   the configured cycle limit is reached.
 
-If a brief is incomplete, for example only `Тема: CRM`, the bot asks for missing parameters such as language and target word count instead of generating a draft from guessed requirements.
+If a brief is incomplete, for example only `Тема: CRM`, the bot asks for missing
+parameters such as language and target word count instead of generating a draft
+from guessed requirements.
 
 ## Tech Stack
 
@@ -148,7 +167,8 @@ For webhook hosting:
 BOT_RUN_MODE=webhook WEBHOOK_URL=https://example.com/webhook txt-key-generator-bot
 ```
 
-Webhook mode registers `/webhook` with Telegram and starts an `aiohttp` server on `WEBHOOK_HOST:WEBHOOK_PORT`.
+Webhook mode registers `/webhook` with Telegram and starts an `aiohttp` server
+on `WEBHOOK_HOST:WEBHOOK_PORT`.
 
 ## Development
 
@@ -158,7 +178,9 @@ Run the test suite:
 pytest
 ```
 
-The tests cover routing, file/system skills, checker behavior, prompt construction, custom parameter preservation, and orchestration paths with fake model-backed components.
+The tests cover routing, file/system skills, checker behavior, prompt
+construction, custom parameter preservation, and orchestration paths with fake
+model-backed components.
 
 Useful local checks before opening a pull request:
 
@@ -175,14 +197,16 @@ For contribution workflow, local checks, and pull request expectations, see
 - Use `BOT_RUN_MODE=webhook` when hosting behind a public HTTPS endpoint.
 - Store `.env` values in the deployment platform's secret manager; do not commit real tokens.
 - Add process supervision, logs, and health checks before running the bot as a persistent service.
-- Keep a human review step for externally published content, especially when the checker asks for clarification or the final report score is low.
+- Keep a human review step for externally published content, especially when the
+  checker asks for clarification or the final report score is low.
 
 ## Limitations
 
 - There is no selected license yet.
 - The repository does not include deployment manifests or release automation.
 - PDF support depends on extractable text; image-only PDFs need OCR before this bot can read them.
-- Model output quality depends on the completeness of the source brief, the selected model, and the clarity of the red policy and constraints.
+- Model output quality depends on the completeness of the source brief, the
+  selected model, and the clarity of the red policy and constraints.
 
 ## Roadmap
 
@@ -197,4 +221,7 @@ For contribution workflow, local checks, and pull request expectations, see
 
 ## GitHub Collaboration
 
-The repository includes issue templates for bug reports and feature requests, a pull request template with checks for bot behavior, agent workflow, file parsing, configuration/deployment impact, and test coverage, a contribution guide, plus a GitHub Actions workflow that runs the Python test suite.
+The repository includes issue templates for bug reports and feature requests, a
+pull request template with checks for bot behavior, agent workflow, file
+parsing, configuration/deployment impact, and test coverage, a contribution
+guide, plus a GitHub Actions workflow that runs the Python test suite.
