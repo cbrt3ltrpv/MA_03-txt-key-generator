@@ -50,11 +50,14 @@ before publication.
 
 ## Agents
 
-| Agent | Responsibility | Input | Output | Failure or review path |
-| --- | --- | --- | --- | --- |
-| `GeneratorAgent` | Builds the first draft from normalized generation keys. | `GenerationKeys` | `GeneratedDraft` | The draft is always sent to `CheckerAgent` before reaching the user. |
-| `CheckerAgent` | Checks the draft against deterministic checks and model-evaluated requirements. | Draft text and `GenerationKeys` | `CheckReport` | Failed reports produce revision instructions or clarification questions. |
-| `ReviserAgent` | Rewrites failed drafts according to the checker report while preserving satisfied constraints. | Draft text, `GenerationKeys`, `CheckReport` | `RevisionResult` | Revised text loops back to `CheckerAgent` until it passes or the cycle limit is reached. |
+- `GeneratorAgent` builds the first draft from normalized generation keys. Its
+  `GeneratedDraft` is always sent to `CheckerAgent` before reaching the user.
+- `CheckerAgent` checks the draft against deterministic checks and
+  model-evaluated requirements. Failed reports produce revision instructions or
+  clarification questions.
+- `ReviserAgent` rewrites failed drafts according to the checker report while
+  preserving satisfied constraints. Revised text loops back to `CheckerAgent`
+  until it passes or the cycle limit is reached.
 
 ## Skills and Components
 
@@ -128,7 +131,7 @@ src/txt_key_generator/
   schemas.py     Pydantic contracts for inputs, reports, and results
 tests/           Unit tests with fake model clients
 examples/        Ready-to-send generation brief for manual workflow checks
-.github/         Issue templates, pull request template, and CI workflow
+.github/         Issue forms, pull request checklist, and CI workflow
 ```
 
 ## Setup
@@ -221,7 +224,7 @@ For contribution workflow, local checks, and pull request expectations, see
 
 ## GitHub Collaboration
 
-The repository includes issue templates for bug reports and feature requests, a
-pull request template with checks for bot behavior, agent workflow, file
+The repository includes issue forms for bug reports and feature requests, a
+pull request checklist with checks for bot behavior, agent workflow, file
 parsing, configuration/deployment impact, and test coverage, a contribution
 guide, plus a GitHub Actions workflow that runs the Python test suite.
