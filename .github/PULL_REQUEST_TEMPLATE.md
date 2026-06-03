@@ -17,7 +17,8 @@
 
 ## Runtime Impact
 
-Note any changes to environment variables, model behavior, Telegram routing, webhook setup, or revision-cycle behavior.
+Note any changes to environment variables, model behavior, Telegram routing, webhook setup, or
+revision-cycle behavior.
 
 ## Risk / Rollback
 
